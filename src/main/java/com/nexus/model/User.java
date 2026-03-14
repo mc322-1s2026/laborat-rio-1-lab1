@@ -23,7 +23,13 @@ public class User {
         return username;
     }
 
-    public long calculateWorkload() {
-        return 0; 
+    public long calculateWorkload(List<Task> allTasks) {
+        if (allTasks == null || allTasks.isEmpty()) return 0;
+
+        return allTasks.stream()
+            .filter(task -> task.getOwner() != null && task.getOwner().consultUsername().equals(this.username))
+            .filter(task -> task.getStatus() == TaskStatus.IN_PROGRESS)
+            .count();
+
     }
 }
