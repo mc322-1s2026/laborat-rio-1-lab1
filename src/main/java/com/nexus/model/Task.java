@@ -33,6 +33,19 @@ public class Task {
     public void moveToInProgress(User user) {
         // TODO: Implementar lógica de proteção e atualizar activeWorkload
         // Se falhar, incrementar totalValidationErrors e lançar NexusValidationException
+        if (this.owner == null){
+            this.owner = user;
+        }
+
+        if (this.owner == null || this.status == TaskStatus.BLOCKED) {
+            totalValidationErrors++;
+            throw new NexusValidationException("Falha na transição: Tarefa bloqueada ou sem dono atribuído.");
+        }
+
+        if (this.status != TaskStatus.IN_PROGRESS) {
+            this.status = TaskStatus.IN_PROGRESS;
+            activeWorkload++;
+        }
     }
 
     /**
@@ -41,10 +54,22 @@ public class Task {
      */
     public void markAsDone() {
         // TODO: Implementar lógica de proteção e atualizar activeWorkload (decrementar)
+        if (this.status == TaskStatus.IN_PROGRESS) {
+            activeWorkload--;
+        }
+        this.status = TaskStatus.DONE;
     }
 
     public void setBlocked(boolean blocked) {
+        if (this.status == TaskStatus.DONE) {
+            totalValidationErrors++;
+            throw new NexusValidationException("Falha: tarefas finalizadas(DONE) não podem ser bloqueadas.");
+        }
+
         if (blocked) {
+            if (this.status == TaskStatus.IN_PROGRESS) {
+                activeWorkload--;
+            }
             this.status = TaskStatus.BLOCKED;
         } else {
             this.status = TaskStatus.TO_DO; // Simplificação para o Lab
