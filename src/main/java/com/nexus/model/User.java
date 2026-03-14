@@ -9,6 +9,9 @@ public class User {
             throw new IllegalArgumentException("Username não pode ser vazio.");
         }
         this.username = username;
+        if (email == null || !email.contains("@dominio.com")) {
+            throw new IllegalArgumentException("Email inválido.");
+        }
         this.email = email;
     }
 
