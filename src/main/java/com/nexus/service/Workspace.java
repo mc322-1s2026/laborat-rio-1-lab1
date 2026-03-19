@@ -42,4 +42,14 @@ public class Workspace {
             .toList();
     }
 
+    public double getProjectHealth(Project project) {
+        if(project.getTarefas().isEmpty()) return 0.0;
+
+        long doneCount = project.getTarefas().stream()
+            .filter(t -> t.getStatus() == TaskStatus.DONE)
+            .count();
+
+            return ((double) doneCount / project.getTarefas().size()) * 100;
+    }
+
 }
