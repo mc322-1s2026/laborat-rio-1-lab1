@@ -52,4 +52,14 @@ public class Workspace {
             return ((double) doneCount / project.getTarefas().size()) * 100;
     }
 
+    public TaskStatus getGlobalBottlenecks() {
+        return tasks.stream()
+            .filter(t -> t.getStatus() != TaskStatus.DONE)
+            .collect(Collectors.groupingBy(Task::getStatus, Collectors.counting()))
+            .entrySet().stream()
+            .max(Map.Entry.comparingByValue())
+            .map(Map.Entry::getKey)
+            .orElse(null);
+    }
+
 }
