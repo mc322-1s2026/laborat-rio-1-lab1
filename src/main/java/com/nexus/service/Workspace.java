@@ -25,4 +25,15 @@ public class Workspace {
     public List<User> getUsers() { return Collections.unmodifiableList(users); }
     public List<Project> getProjects() { return Collections.unmodifiableList(projects); }
 
+    public List<User> getTopPerformers() {
+        return tasks.stream()
+            .filter(t-> t.getStatus() == TaskStatus.DONE && t.getOwner() != null)
+            .collect(Collectors.groupingBy(Task::getOwner, Collectors.counting()))
+            .entrySet().stream()
+            .sorted(Map.Entry.<User, Long>comparingByValue().reversed())
+            .limit(3)
+            .map(Map.Entry::getKey)
+            .toList();
+    } 
+
 }
