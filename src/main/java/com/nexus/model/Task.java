@@ -50,12 +50,21 @@ public class Task {
         }
     }
 
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
     /**
      * Finaliza a tarefa.
      * Regra: Só pode ser movida para DONE se não estiver BLOCKED.
      */
     public void markAsDone() {
         // TODO: Implementar lógica de proteção e atualizar activeWorkload (decrementar)
+        if (this.status == TaskStatus.BLOCKED) {
+            totalValidationErrors++;
+            throw new NexusValidationException("Falha na transição: Tarefa bloqueada náo pode ser movida para DONE.");
+        }
+
         if (this.status == TaskStatus.IN_PROGRESS) {
             activeWorkload--;
         }
