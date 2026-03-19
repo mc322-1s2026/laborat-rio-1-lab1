@@ -36,4 +36,10 @@ public class Workspace {
             .toList();
     } 
 
+    public List<User> getOverloadedUsers() {
+        return users.stream()
+            .filter(u -> u.calculateWorkload(tasks) > 10)
+            .toList();
+    }
+
 }
