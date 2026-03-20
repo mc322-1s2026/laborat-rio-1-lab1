@@ -1,6 +1,6 @@
 package com.nexus.model;
 
-import java.utils.List;
+import java.util.List;
 
 public class User {
     private final String username;
