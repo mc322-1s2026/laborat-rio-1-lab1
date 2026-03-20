@@ -41,12 +41,23 @@ public class LogProcessor {
                             }
 
                             case "CREATE_TASK" -> {
-                                Task t = new Task(p[1], LocalDate.parse(p[2]), Integer.parseInt(p[3]));
-                                Project proj = findProject(workspace, p[4]);
+                                if (p.length == 3) {
+                                    Task t = new Task(p[1], LocalDate.parse(p[2]));
+                                    workspace.addTask(t);
+                                    System.out.println("[LOG] Tarefa criada " + p[1]);
+                                }
 
-                                proj.addTask(t);
-                                workspace.addTask(t);
-                                System.out.println("[LOG] Tarefa criada e vinculada ao projeto: " + p[4] + ": " + p[1]);
+                                else if (p.length == 5) {
+                                    Task t = new Task(p[1], LocalDate.parse(p[2]), Integer.parseInt(p[3]));
+                                    Project proj = findProject(workspace, p[4]);
+    
+                                    proj.addTask(t);
+                                    workspace.addTask(t);
+                                    System.out.println("[LOG] Tarefa criada e vinculada ao projeto: " + p[4] + ": " + p[1]);
+                                } else {
+                                    throw new IllegalArgumentException("Parâmetros insuficientes para CREATE_TASK.");
+                                }
+
                             }
                             case "ASSIGN_USER" -> {
                                 Task t = findTask(workspace, Integer.parseInt(p[1]));

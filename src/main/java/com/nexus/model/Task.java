@@ -20,16 +20,26 @@ public class Task {
     private User owner;
     private int estimatedEffort;
 
+    public Task(String title, LocalDate deadline) {
+        this.id = nextId++;
+        this.deadline = deadline;
+        this.title = title;
+        this.status = TaskStatus.TO_DO;
+	    this.estimatedEffort = 0;
+        
+        totalTasksCreated++; 
+    }
+
     public Task(String title, LocalDate deadline, int estimatedEffort) {
         this.id = nextId++;
         this.deadline = deadline;
         this.title = title;
         this.status = TaskStatus.TO_DO;
-	this.estimatedEffort = estimatedEffort;
+	    this.estimatedEffort = estimatedEffort;
         
-        // Ação do Aluno:
         totalTasksCreated++; 
     }
+
 
     /**
      * Move a tarefa para IN_PROGRESS.
