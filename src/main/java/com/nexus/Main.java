@@ -24,7 +24,6 @@ import com.nexus.service.Workspace;
 public class Main {
     private static final Scanner scanner = new Scanner(System.in);
     private static final Workspace workspace = new Workspace();
-    private static final List<User> users = new ArrayList<>();
     private static final LogProcessor logProcessor = new LogProcessor();
 
     /**
@@ -51,7 +50,7 @@ public class Main {
                     System.out.println("1. Carregar Log V1 (Básico)\n2. Carregar Log V2 (Desafio)");
                     String logChoice = scanner.nextLine();
                     String file = (logChoice.equals("1")) ? "log_v1.txt" : "log_v2.txt";
-                    logProcessor.processLog(file, workspace, users);
+                    logProcessor.processLog(file, workspace);
                 }
                 default -> System.out.println("\n[!] Opção inválida.");
             }
@@ -89,9 +88,9 @@ public class Main {
             String email = scanner.nextLine();
 
             User newUser = new User(username, email);
-            users.add(newUser);
+            workspace.addUser(newUser);
             System.out.println("[OK] Usuário cadastrado.");
-        } catch (NexusValidationException e) {
+        } catch (IllegalArgumentException | NexusValidationException e) {
             System.err.println("[ERRO] " + e.getMessage());
         }
     }

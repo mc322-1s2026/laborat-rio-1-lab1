@@ -1,5 +1,8 @@
 package com.nexus.model;
 
+
+import com.nexus.exception.*;
+
 import java.time.LocalDate;
 
 public class Task {

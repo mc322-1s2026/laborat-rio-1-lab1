@@ -1,5 +1,7 @@
 package com.nexus.model;
 
+import java.utils.List;
+
 public class User {
     private final String username;
     private final String email;

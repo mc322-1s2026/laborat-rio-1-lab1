@@ -49,7 +49,7 @@ public class LogProcessor {
                                 System.out.println("[LOG] Tarefa criada e vinculada ao projeto: " + p[4] + ": " + p[1]);
                             }
                             case "ASSIGN_USER" -> {
-                                Tast t = findTask(workspace, Integer.parseInt(p[1]));
+                                Task t = findTask(workspace, Integer.parseInt(p[1]));
                                 User u = findUser(workspace, p[2]);
                                 t.setOwner(u);
                                 System.out.println("[LOG] Tarefa" + p[1] + " atribuída a " + p[2]);
