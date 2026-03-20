@@ -61,5 +61,4 @@ public class Workspace {
             .map(Map.Entry::getKey)
             .orElse(null);
     }
-
 }
